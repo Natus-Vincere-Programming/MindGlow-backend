@@ -1,51 +1,52 @@
-package com.natusvincere.mindblow.authentication;
+package com.natusvincere.mindglow.user;
 
+import com.natusvincere.mindglow.token.Token;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
-@Setter
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
 public class User implements UserDetails {
+
     @Id
-    @Column(name = "id", unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-    @Column(name = "email", unique = true, nullable = false)
+    @GeneratedValue
+    private Integer id;
+    private String firstname;
+    private String lastname;
     private String email;
-    @Column(name = "password", unique = true, nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
     private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return role.getAuthorities();
     }
 
     @Override
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return this.email;
+        return email;
     }
 
     @Override

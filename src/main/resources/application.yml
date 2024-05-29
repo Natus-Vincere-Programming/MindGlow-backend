@@ -1,3 +1,23 @@
 spring:
-  application:
-    name: MindBlow
+  datasource:
+    url: jdbc:postgresql://localhost:5432/jwt_security
+    username: postgres
+    password: 12345678
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+application:
+  security:
+    jwt:
+      secret-key: E4F56E4FDC9BDCA24F48C9B56EED0DED4942372A744D8651290B5713AEA876DF
+      expiration: 86400000
+      refresh-token:
+        expiration: 604800000
