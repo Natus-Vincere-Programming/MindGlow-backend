@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/test
+    username: root
+    password: 12345678
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+
+application:
+  security:
+    jwt:
+      secret-key: E4F56E4FDC9BDCA24F48C9B56EED0DED4942372A744D8651290B5713AEA876DF
+      expiration: 86400000
+      refresh-token:
+        expiration: 604800000

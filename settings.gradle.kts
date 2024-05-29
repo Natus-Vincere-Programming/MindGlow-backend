@@ -1,1 +1,1 @@
-rootProject.name = "mindblow"
+rootProject.name = "mindglow"
