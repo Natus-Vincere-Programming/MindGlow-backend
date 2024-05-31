@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import static com.natusvincere.mindglow.user.Role.ADMIN;
+import static com.natusvincere.mindglow.user.Role.TEACHER;
 
 @SpringBootApplication
 public class MindBlowApplication {
@@ -29,7 +30,14 @@ public class MindBlowApplication {
                     .role(ADMIN)
                     .build();
             System.out.println("Admin token: " + service.register(admin).getAccessToken());
-
+            var teacher = RegisterRequest.builder()
+                    .firstname("Teacher")
+                    .lastname("Teacher")
+                    .email("teacher@mail.com")
+                    .password("password")
+                    .role(TEACHER)
+                    .build();
+            System.out.println("Teacher token: " + service.register(teacher).getAccessToken());
         };
     }
 

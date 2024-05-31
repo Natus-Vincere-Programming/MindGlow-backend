@@ -39,6 +39,7 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.assertj:assertj-core:3.25.3")
+	implementation("com.google.code.gson:gson:2.11.0")
 }
 
 tasks.withType<Test> {

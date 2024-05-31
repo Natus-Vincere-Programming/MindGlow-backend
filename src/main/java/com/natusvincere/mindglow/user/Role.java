@@ -14,13 +14,21 @@ import static com.natusvincere.mindglow.user.Permission.*;
 @RequiredArgsConstructor
 public enum Role {
 
-    USER(Collections.emptySet()),
+    STUDENT(Collections.emptySet()),
+    TEACHER(
+            Set.of(
+                    COURSE_CREATE,
+                    COURSE_DELETE,
+                    COURSE_STUDENT_ADD,
+                    COURSE_STUDENT_REMOVE
+            )
+    ),
     ADMIN(
             Set.of(
-                    ADMIN_READ,
-                    ADMIN_UPDATE,
-                    ADMIN_DELETE,
-                    ADMIN_CREATE
+                    COURSE_CREATE,
+                    COURSE_DELETE,
+                    COURSE_STUDENT_ADD,
+                    COURSE_STUDENT_REMOVE
             )
     );
 

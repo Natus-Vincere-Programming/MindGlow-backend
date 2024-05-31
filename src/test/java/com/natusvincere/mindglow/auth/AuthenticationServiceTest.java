@@ -50,11 +50,11 @@ public class AuthenticationServiceTest {
 
     @Test
     public void registerShouldSaveUserAndGenerateTokens() {
-        RegisterRequest request = new RegisterRequest("John", "Doe", "john.doe@example.com", "password", Role.USER);
+        RegisterRequest request = new RegisterRequest("John", "Doe", "john.doe@example.com", "password", Role.STUDENT);
         User user = new User();
         user.setEmail("john.doe@example.com");
         user.setPassword("password");
-        user.setRole(Role.USER);
+        user.setRole(Role.STUDENT);
 
         when(userRepository.save(any(User.class))).thenReturn(user);
         when(jwtService.generateToken(any(User.class))).thenReturn("jwtToken");
@@ -74,7 +74,7 @@ public class AuthenticationServiceTest {
         User user = new User();
         user.setEmail("john.doe@example.com");
         user.setPassword("password");
-        user.setRole(Role.USER);
+        user.setRole(Role.STUDENT);
 
         when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
         when(jwtService.generateToken(any(User.class))).thenReturn("jwtToken");
@@ -95,7 +95,7 @@ public class AuthenticationServiceTest {
         User user = new User();
         user.setEmail("john.doe@example.com");
         user.setPassword("password");
-        user.setRole(Role.USER);
+        user.setRole(Role.STUDENT);
 
         when(request.getHeader(anyString())).thenReturn("Bearer refreshToken");
         when(jwtService.extractUsername(anyString())).thenReturn("john.doe@example.com");
