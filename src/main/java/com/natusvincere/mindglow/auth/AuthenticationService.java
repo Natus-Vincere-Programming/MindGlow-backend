@@ -38,6 +38,7 @@ public class AuthenticationService {
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .enabled(false)
                 .role(request.getRole())
                 .build();
         var savedUser = repository.save(user);
@@ -137,5 +138,9 @@ public class AuthenticationService {
                 new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
         }
+    }
+
+    public boolean checkTakenEmail(String email) {
+        return repository.existsByEmail(email);
     }
 }
