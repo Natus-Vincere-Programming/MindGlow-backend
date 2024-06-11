@@ -41,6 +41,7 @@ dependencies {
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.assertj:assertj-core:3.25.3")
 	implementation("com.google.code.gson:gson:2.11.0")
+	runtimeOnly("com.h2database:h2")
 }
 
 tasks.withType<Test> {
