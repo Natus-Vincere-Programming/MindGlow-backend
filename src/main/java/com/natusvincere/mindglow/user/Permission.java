@@ -10,7 +10,8 @@ public enum Permission {
     COURSE_CREATE("course:create"),
     COURSE_DELETE("course:delete"),
     COURSE_STUDENT_ADD("course:student:add"),
-    COURSE_STUDENT_REMOVE("course:student:remove");
+    COURSE_STUDENT_REMOVE("course:student:remove"),
+    USER_ENABLE("user:enable");
 
     private final String permission;
 }

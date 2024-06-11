@@ -12,6 +12,9 @@ spring:
       hibernate:
         format_sql: true
     database: mysql
+  devtools:
+    livereload:
+      enabled: true
 
 application:
   security:
@@ -20,3 +23,6 @@ application:
       expiration: 86400000
       refresh-token:
         expiration: 604800000
+logging:
+  level:
+    web: debug
