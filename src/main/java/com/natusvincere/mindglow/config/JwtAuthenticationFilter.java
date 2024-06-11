@@ -17,6 +17,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ * Фільтр аутентифікації JWT який спрацьовує при кожному запиту (аутентифікуючи користувача)
+
+ */
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -30,8 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
-    ) throws ServletException, IOException {
-        if (request.getServletPath().contains("/api/v1/auth")) {
+    ) throws ServletException, IOException {if (request.getServletPath().contains("/api/v1/auth")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -43,6 +46,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         jwt = authHeader.substring(7);
+        if (!jwtService.isJwtToken(jwt)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         userEmail = jwtService.extractUsername(jwt);
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
@@ -58,7 +65,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authToken.setDetails(
                         new WebAuthenticationDetailsSource().buildDetails(request)
                 );
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+                if (userDetails.isEnabled()) {
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
             }
         }
         filterChain.doFilter(request, response);

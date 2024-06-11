@@ -2,10 +2,14 @@ package com.natusvincere.mindglow.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
+import org.springframework.context.MessageSourceAware;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +20,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
+@Slf4j
 public class JwtService {
 
     @Value("${application.security.jwt.secret-key}")
@@ -27,6 +32,16 @@ public class JwtService {
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
+    }
+
+    public boolean isJwtToken(String token) {
+        try {
+            extractAllClaims(token);
+            return true;
+        } catch (MalformedJwtException e) {
+            log.debug("Invalid JWT token: {}", e.getMessage());
+        }
+        return false;
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
