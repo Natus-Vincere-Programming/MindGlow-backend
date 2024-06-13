@@ -1,4 +1,4 @@
-package com.natusvincere.mindglow.user;
+package com.natusvincere.mindglow.user.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Deprecated
 public class PaginationUserResponse {
 
     private List<UserResponse> users;

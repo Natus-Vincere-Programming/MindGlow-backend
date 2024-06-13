@@ -1,5 +1,6 @@
-package com.natusvincere.mindglow.user;
+package com.natusvincere.mindglow.user.request;
 
+import com.natusvincere.mindglow.user.Pagination;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

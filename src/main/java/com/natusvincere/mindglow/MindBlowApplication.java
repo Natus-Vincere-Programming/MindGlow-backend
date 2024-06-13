@@ -2,15 +2,14 @@ package com.natusvincere.mindglow;
 
 import com.natusvincere.mindglow.auth.AuthenticationService;
 import com.natusvincere.mindglow.auth.RegisterRequest;
-import com.natusvincere.mindglow.user.EnableUserRequest;
+import com.natusvincere.mindglow.user.request.EnableUserRequest;
 import com.natusvincere.mindglow.user.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import static com.natusvincere.mindglow.user.Role.ADMIN;
-import static com.natusvincere.mindglow.user.Role.TEACHER;
+import static com.natusvincere.mindglow.user.Role.*;
 
 @SpringBootApplication
 public class MindBlowApplication {
@@ -34,15 +33,16 @@ public class MindBlowApplication {
                     .build();
             System.out.println("Admin token: " + service.register(admin).getAccessToken());
             userService.enableUser(new EnableUserRequest(1, admin.getFirstname(), admin.getLastname(), ADMIN));
-            for (int i = 0; i < 100; i++) {
-                var teacher = RegisterRequest.builder()
-                        .firstname("Teacher" + i)
-                        .lastname("Teacher" + i)
-                        .email("teacher@mail.com" + i)
+            for (int i = 2; i < 100; i++) {
+                var student = RegisterRequest.builder()
+                        .firstname("Student" + i)
+                        .lastname("Student" + i)
+                        .email("student@mail.com" + i)
                         .password("password" + i)
-                        .role(TEACHER)
+                        .role(STUDENT)
                         .build();
-                System.out.println("Teacher token: " + service.register(teacher).getAccessToken());
+                System.out.println("Student token: " + service.register(student).getAccessToken());
+                userService.enableUser(new EnableUserRequest(i, student.getFirstname(), student.getLastname(), STUDENT));
             }
         };
     }
