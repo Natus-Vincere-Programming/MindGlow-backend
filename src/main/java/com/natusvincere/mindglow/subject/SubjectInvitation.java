@@ -1,4 +1,4 @@
-package com.natusvincere.mindglow.course;
+package com.natusvincere.mindglow.subject;
 
 import com.natusvincere.mindglow.user.User;
 import jakarta.persistence.*;
@@ -12,14 +12,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "course_invitations")
-public class CourseInvitation {
+@Table(name = "subject_invitations")
+public class SubjectInvitation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
     @ManyToOne
-    private Course course;
+    private Subject subject;
     @ManyToOne
     private User user;
 }

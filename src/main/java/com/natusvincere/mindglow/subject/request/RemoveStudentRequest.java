@@ -1,4 +1,4 @@
-package com.natusvincere.mindglow.course.request;
+package com.natusvincere.mindglow.subject.request;
 
 public record RemoveStudentRequest(
         Integer courseId,

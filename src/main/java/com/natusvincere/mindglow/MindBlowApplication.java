@@ -39,10 +39,10 @@ public class MindBlowApplication {
                         .lastname("Student" + i)
                         .email("student@mail.com" + i)
                         .password("password" + i)
-                        .role(STUDENT)
+                        .role(TEACHER)
                         .build();
                 System.out.println("Student token: " + service.register(student).getAccessToken());
-                userService.enableUser(new EnableUserRequest(i, student.getFirstname(), student.getLastname(), STUDENT));
+                userService.enableUser(new EnableUserRequest(i, student.getFirstname(), student.getLastname(), TEACHER));
             }
         };
     }
