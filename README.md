@@ -19,7 +19,7 @@
    - **Обов'язково назвати базу даних `test`** і нажати кнопку `Гаразд` ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/e441ba3f-ca83-413d-b713-09cd427a26cd)
    - Якщо з'явилася база даних `test` значить все ок! ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/ce4e98b1-000d-4d77-a22c-492b7c743fe5)
 ## Запуск програми \
-Для запуску програми потрібно завантажити `backend-v.0.0.?.zip` за [посиланням](https://github.com/Natus-Vincere-Programming/MindGlow-backend/releases) і розпакувати \
+Для запуску програми потрібно завантажити `backend-v.0.0.2.zip` за [посиланням](https://github.com/Natus-Vincere-Programming/MindGlow-backend/releases) і розпакувати \
 - Розпакувати, відкрити через текстовий редактор, наприклад Notepad++, файл `start.bat`. Встановити шлях до Java (має бути шлях до файлу java.exe) який ми запам'ятали раніше. ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/682ea86b-73d8-44eb-830a-e2f60147ef6a) ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/1197e131-3a14-4c53-b00e-663319fc8e1c)
 - Щоб легко отримати шлях можна вибрати файл `java.exe` і натиснути `Ctrl + Shift + C`. Шлях скопіюється. ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/7d24d3db-9f96-4df3-90d4-5a6f3a7612ad)
 
