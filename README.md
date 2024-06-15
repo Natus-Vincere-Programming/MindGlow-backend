@@ -18,7 +18,16 @@
    - Зробити дії за фото ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/b358feb2-d253-43ac-bda7-171a5982a511) Ввести пароль який вводили при встановленні MySQL. Нажати кнопку відкрити ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/cb034492-a14f-4f14-96d1-e09b570e6f1c) Нажати лівою кнопкою мишки на Unnamed і створити нову базу даних ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/0839c45a-c106-4ade-a4e4-eede907738a7)
    - **Обов'язково назвати базу даних `test`** і нажати кнопку `Гаразд` ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/e441ba3f-ca83-413d-b713-09cd427a26cd)
    - Якщо з'явилася база даних `test` значить все ок! ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/ce4e98b1-000d-4d77-a22c-492b7c743fe5)
-4. Запуск програми
+## Запуск програми \
+Для запуску програми потрібно завантажити `backend-v.0.0.?.zip` за [посиланням](https://github.com/Natus-Vincere-Programming/MindGlow-backend/releases) і розпакувати \
+- Розпакувати, відкрити через текстовий редактор, наприклад Notepad++, файл `start.bat`. Встановити шлях до Java (має бути шлях до файлу java.exe) який ми запам'ятали раніше. ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/682ea86b-73d8-44eb-830a-e2f60147ef6a) ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/1197e131-3a14-4c53-b00e-663319fc8e1c)
+- Щоб легко отримати шлях можна вибрати файл `java.exe` і натиснути `Ctrl + Shift + C`. Шлях скопіюється. ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/7d24d3db-9f96-4df3-90d4-5a6f3a7612ad)
+
+- Зберегти відредагований файл з новим шляхом до java.exe
+- Запустити його \
+  І бекенд має працювати :D
+
+
 
 
 
