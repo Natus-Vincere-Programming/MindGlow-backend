@@ -29,7 +29,10 @@ public enum Role {
                     COURSE_DELETE,
                     COURSE_STUDENT_ADD,
                     COURSE_STUDENT_REMOVE,
-                    USER_ENABLE
+                    USER_ENABLE,
+                    USER_DELETE,
+                    USER_GET,
+                    USER_UPDATE
             )
     );
 

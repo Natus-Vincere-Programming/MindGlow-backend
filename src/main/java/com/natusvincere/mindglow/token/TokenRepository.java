@@ -1,5 +1,6 @@
 package com.natusvincere.mindglow.token;
 
+import com.natusvincere.mindglow.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -16,4 +17,7 @@ public interface TokenRepository extends JpaRepository<Token, Integer> {
     List<Token> findAllValidTokenByUser(Integer id);
 
     Optional<Token> findByToken(String token);
+
+    boolean existsByTokenAndExpiredAndRevoked(String token, boolean expired, boolean revoked);
+    void deleteAllByUser(User user);
 }

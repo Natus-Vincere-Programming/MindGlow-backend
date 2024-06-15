@@ -1,4 +1,4 @@
-package com.natusvincere.mindglow.course;
+package com.natusvincere.mindglow.subject;
 
 import com.natusvincere.mindglow.user.User;
 import jakarta.persistence.*;
@@ -14,8 +14,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "courses")
-public class Course {
+@Table(name = "subjects")
+public class Subject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -23,9 +23,7 @@ public class Course {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
-    private String section;
-    @Column(nullable = false)
-    private String topic;
+    private String description;
     @Column(unique = true)
     private String code;
     @ManyToOne
@@ -33,7 +31,7 @@ public class Course {
     private User teacher;
     @ManyToMany
     @JoinTable(
-            name = "course_students",
+            name = "subject_students",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )

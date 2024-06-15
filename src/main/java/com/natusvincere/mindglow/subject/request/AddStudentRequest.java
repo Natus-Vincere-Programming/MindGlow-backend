@@ -1,18 +1,16 @@
-package com.natusvincere.mindglow.user;
+package com.natusvincere.mindglow.subject.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PaginationUserResponse {
+public class AddStudentRequest {
 
-    private List<UserResponse> users;
-    private boolean hasNext;
+    private Integer subjectId;
+    private Integer studentId;
 }

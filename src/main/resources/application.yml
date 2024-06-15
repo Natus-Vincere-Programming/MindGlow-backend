@@ -1,21 +1,18 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password: password
-    driver-class-name: org.h2.Driver
+    url: jdbc:mysql://localhost:3306/test
+    username: root
+    password: 12345678
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     show-sql: false
     properties:
       hibernate:
         format_sql: true
-    database: h2
-    database-platform: org.hibernate.dialect.H2Dialect
-  devtools:
-    livereload:
-      enabled: true
+        dialect: org.hibernate.dialect.MySQLDialect
+    database: mysql
 
 application:
   security:
@@ -24,6 +21,3 @@ application:
       expiration: 86400000
       refresh-token:
         expiration: 604800000
-logging:
-  level:
-    web: debug
