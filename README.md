@@ -10,9 +10,17 @@
    - Вибрати Execute ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/4d6737dc-6bc9-431c-bff3-64aeb2c49280)
    - Залишити налаштування такі як тут ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/ac7bf0a9-7fa5-4d60-8490-cc6c6ee78b21)
    - Так як тут ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/c774d367-cea0-453f-9b87-4d38588d3686)
-   - Встановити пароль для root користувача (**пароль запам'ятати**) ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/55c75c34-7ca9-4856-b60f-314454caedba)
+   - Встановити пароль `12345678` для root користувача (**встановити пароль обов'язково такий самий**) ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/55c75c34-7ca9-4856-b60f-314454caedba)
    - Залишити налаштування як тут ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/00c9c394-1e97-40f4-8701-0db4875e0f78) \ ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/60aa0ff4-82b5-4dfe-a843-7248bb18ff6e) \ Execute ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/41e31501-bf8b-4289-a54d-3ac28df5ba3e)
    - Закінчити налаштування
+3. Налаштування бази даних
+   - Потрібно за [посиланням](https://www.heidisql.com/download.php) встановити HeidiSQL.
+   - Зробити дії за фото ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/b358feb2-d253-43ac-bda7-171a5982a511) Ввести пароль який вводили при встановленні MySQL. Нажати кнопку відкрити ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/cb034492-a14f-4f14-96d1-e09b570e6f1c) Нажати лівою кнопкою мишки на Unnamed і створити нову базу даних ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/0839c45a-c106-4ade-a4e4-eede907738a7)
+   - **Обов'язково назвати базу даних `test`** ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/e441ba3f-ca83-413d-b713-09cd427a26cd)
+
+
+
+
 
 
 
