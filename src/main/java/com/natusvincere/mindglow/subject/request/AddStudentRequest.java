@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AddStudentRequest {
 
-    private Integer courseId;
+    private Integer subjectId;
     private Integer studentId;
 }

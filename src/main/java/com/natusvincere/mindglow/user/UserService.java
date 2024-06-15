@@ -1,7 +1,10 @@
 package com.natusvincere.mindglow.user;
 
 import com.natusvincere.mindglow.config.JwtService;
+import com.natusvincere.mindglow.subject.Subject;
+import com.natusvincere.mindglow.subject.SubjectRepository;
 import com.natusvincere.mindglow.token.TokenRepository;
+import com.natusvincere.mindglow.user.exception.TokenNotValidException;
 import com.natusvincere.mindglow.user.request.EnableUserRequest;
 import com.natusvincere.mindglow.user.request.UserRequest;
 import com.natusvincere.mindglow.user.request.UsersRequest;
@@ -18,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -29,6 +33,7 @@ public class UserService {
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
+    private final SubjectRepository subjectRepository;
 
     /**
      * Change the password of the connected user
@@ -96,6 +101,11 @@ public class UserService {
     @Transactional
     public void deleteUser(int id) {
         User user = userRepository.findById(id).orElseThrow();
+        Optional<Subject> byStudentsContaining = subjectRepository.findByStudentsContaining(user);
+        byStudentsContaining.ifPresent(subject -> {
+            subject.getStudents().remove(user);
+            subjectRepository.save(subject);
+        });
         tokenRepository.deleteAllByUser(user);
         userRepository.delete(user);
     }
@@ -160,7 +170,7 @@ public class UserService {
     public UserResponse getUser(String token) {
         var exists = tokenRepository.existsByTokenAndExpiredAndRevoked(token, false, false);
         if (!exists) {
-            throw new IllegalStateException("Token is not valid");
+            throw new TokenNotValidException("Token is not valid");
         }
         String userEmail = jwtService.extractUsername(token);
         return userRepository.findByEmail(userEmail)

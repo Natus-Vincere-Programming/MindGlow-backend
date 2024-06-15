@@ -1,16 +1,19 @@
 package com.natusvincere.mindglow.subject;
 
+import com.natusvincere.mindglow.subject.exception.SubjectAccessException;
+import com.natusvincere.mindglow.subject.exception.SubjectNotFoundException;
 import com.natusvincere.mindglow.subject.request.AddStudentRequest;
 import com.natusvincere.mindglow.subject.request.CreateCourseRequest;
 import com.natusvincere.mindglow.subject.request.RemoveStudentRequest;
-import com.natusvincere.mindglow.exception.HttpForbiddenException;
 import com.natusvincere.mindglow.subject.response.SubjectResponse;
 import com.natusvincere.mindglow.user.Role;
 import com.natusvincere.mindglow.user.User;
 import com.natusvincere.mindglow.user.UserRepository;
+import com.natusvincere.mindglow.user.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.Collection;
@@ -46,12 +49,12 @@ public class SubjectService {
         }
         Subject subject = subjectRepository.findByTeacherAndId(user, Integer.parseInt(id))
                 .orElseThrow(
-                        () -> new HttpForbiddenException("You cannot delete a course that is not your own")
+                        () -> new SubjectAccessException("You cannot delete a course that is not your own")
                 );
         subjectRepository.delete(subject);
     }
 
-    private void generateCode(Integer courseId) {
+    public void generateCode(Integer courseId) {
         String code = generateSixCharacterCode();
         if (subjectRepository.existsByCode(code)) {
             generateCode(courseId);
@@ -65,31 +68,31 @@ public class SubjectService {
         User user = (User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         User student = userRepository.findById(request.getStudentId()).orElseThrow();
         if (user.getRole() == Role.ADMIN) {
-            Subject subject = subjectRepository.findById(request.getCourseId()).orElseThrow();
+            Subject subject = subjectRepository.findById(request.getSubjectId()).orElseThrow();
             subject.getStudents().add(student);
             subjectRepository.save(subject);
             return;
         }
-        Subject subject = subjectRepository.findByTeacherAndId(user, request.getCourseId())
+        Subject subject = subjectRepository.findByTeacherAndId(user, request.getSubjectId())
                 .orElseThrow(
-                        () -> new HttpForbiddenException("You cannot add students to another teacher's course")
+                        () -> new SubjectAccessException("You cannot add students to another teacher's course")
                 );
         subject.getStudents().add(student);
         subjectRepository.save(subject);
     }
 
-    public void removeStudent(RemoveStudentRequest request, Principal principal) {
+    public void removeStudent(int pupilId, int subjectId, Principal principal) {
         User user = getUser(principal);
-        User student = userRepository.findById(request.studentId()).orElseThrow();
+        User student = userRepository.findById(pupilId).orElseThrow();
         if (user.getRole() == Role.ADMIN) {
-            Subject subject = subjectRepository.findById(request.courseId()).orElseThrow();
+            Subject subject = subjectRepository.findById(subjectId).orElseThrow();
             subject.getStudents().remove(student);
             subjectRepository.save(subject);
             return;
         }
-        Subject subject = subjectRepository.findByTeacherAndId(user, request.courseId())
+        Subject subject = subjectRepository.findByTeacherAndId(user, subjectId)
                 .orElseThrow(
-                        () -> new HttpForbiddenException("You cannot remove students from another teacher's course")
+                        () -> new SubjectAccessException("You cannot remove students from another teacher's course")
                 );
         subject.getStudents().remove(student);
         subjectRepository.save(subject);
@@ -115,7 +118,7 @@ public class SubjectService {
 
     public List<SubjectResponse> getAllSubjects(Principal principal) {
         User user = getUser(principal);
-        if (user.getRole() == Role.ADMIN){
+        if (user.getRole() == Role.ADMIN) {
             return mapSubjectToResponse(subjectRepository.findAll());
         }
         if (user.getRole() == Role.TEACHER) {
@@ -133,6 +136,7 @@ public class SubjectService {
                 .id(subject.getId().toString())
                 .build()).toList();
     }
+
     private SubjectResponse mapSubjectToResponse(Subject subject) {
         return SubjectResponse.builder()
                 .teacherName(String.format("%s %s", subject.getTeacher().getLastname(), subject.getTeacher().getFirstname()))
@@ -141,5 +145,44 @@ public class SubjectService {
                 .description(subject.getDescription())
                 .id(subject.getId().toString())
                 .build();
+    }
+
+    public SubjectResponse getSubject(String id, Principal principal) {
+        User user = getUser(principal);
+        if (user.getRole() == Role.ADMIN) {
+            return mapSubjectToResponse(subjectRepository.findById(Integer.parseInt(id))
+                    .orElseThrow(() -> new SubjectNotFoundException("Subject not found")));
+        }
+        if (user.getRole() == Role.TEACHER) {
+            return mapSubjectToResponse(subjectRepository.findByTeacherAndId(user, Integer.parseInt(id))
+                    .orElseThrow(() -> new SubjectAccessException("You cannot access another teacher's course")));
+        }
+        return mapSubjectToResponse(subjectRepository.findByStudentsContainingAndId(user, Integer.parseInt(id))
+                .orElseThrow(() -> new SubjectAccessException("You cannot access a course you are not enrolled in")));
+    }
+
+    public Collection<UserResponse> getStudentSubjects(int id, Principal principal) {
+        User user = getUser(principal);
+        if (user.getRole() == Role.ADMIN) {
+            return mapUsersToResponse(subjectRepository.findById(id)
+                    .orElseThrow(() -> new SubjectNotFoundException("Subject not found")).getStudents());
+        }
+        if (user.getRole() == Role.TEACHER) {
+            return mapUsersToResponse(subjectRepository.findByTeacherAndId(user, id)
+                            .orElseThrow(() -> new SubjectAccessException("You cannot access another teacher's course")).getStudents());
+        }
+        return mapUsersToResponse(subjectRepository.findByStudentsContainingAndId(user, id)
+                        .orElseThrow(() -> new SubjectAccessException("You cannot access a course you are not enrolled in")).getStudents());
+    }
+
+    private List<UserResponse> mapUsersToResponse(Collection<User> users) {
+        return users.stream().map(user -> UserResponse.builder()
+                        .firstname(user.getFirstname())
+                        .lastname(user.getLastname())
+                        .email(user.getEmail())
+                        .role(user.getRole().name())
+                        .id(String.valueOf(user.getId()))
+                        .build())
+                .toList();
     }
 }

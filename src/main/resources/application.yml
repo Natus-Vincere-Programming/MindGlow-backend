@@ -6,16 +6,13 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     show-sql: false
     properties:
       hibernate:
         format_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.MySQLDialect
     database: mysql
-  devtools:
-    livereload:
-      enabled: true
 
 application:
   security:
@@ -24,6 +21,3 @@ application:
       expiration: 86400000
       refresh-token:
         expiration: 604800000
-logging:
-  level:
-    web: debug

@@ -31,7 +31,7 @@ public class UserController {
 
     @GetMapping("id/{id}")
     @PreAuthorize("hasAuthority('user:get')")
-    public ResponseEntity<UserResponse> getUser(@PathVariable int id) {
+    public ResponseEntity<UserResponse>     getUser(@PathVariable int id) {
         return ResponseEntity.ok(userService.getUser(id));
     }
 
