@@ -5,6 +5,7 @@ import com.natusvincere.mindglow.config.JwtService;
 import com.natusvincere.mindglow.token.Token;
 import com.natusvincere.mindglow.token.TokenRepository;
 import com.natusvincere.mindglow.token.TokenType;
+import com.natusvincere.mindglow.user.Role;
 import com.natusvincere.mindglow.user.User;
 import com.natusvincere.mindglow.user.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,12 +34,14 @@ public class AuthenticationService {
      * @return AuthenticationResponse
      */
     public AuthenticationResponse register(RegisterRequest request) {
+        var firstLogin = request.getRole() == Role.ADMIN;
         var user = User.builder()
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
+                .firstname(request.getFirstName())
+                .lastname(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .enabled(false)
+                .firstLogin(firstLogin)
                 .role(request.getRole())
                 .build();
         var savedUser = repository.save(user);

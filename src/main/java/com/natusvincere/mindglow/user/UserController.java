@@ -29,6 +29,15 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @PatchMapping("/credentials")
+    public ResponseEntity<?> changeCredentials(
+            @RequestBody ChangeCredentialsRequest request,
+            Principal connectedUser
+    ) {
+        service.changeCredentials(request, connectedUser);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("id/{id}")
     @PreAuthorize("hasAuthority('user:get')")
     public ResponseEntity<UserResponse>     getUser(@PathVariable int id) {

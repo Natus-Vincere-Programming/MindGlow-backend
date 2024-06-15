@@ -28,8 +28,8 @@ public class MindBlowApplication {
             UserService userService,
             SubjectRepository subjectRepository,
             UserRepository repository,
-            SubjectService subjectService
-    ) {
+            SubjectService subjectService,
+            UserRepository userRepository) {
         return args -> {
             String[] surnames = {
                     "Петренко", "Іваненко", "Коваленко", "Бойко", "Ковальчук", "Мельник", "Поліщук", "Кравчук", "Олійник", "Шевченко",
@@ -57,40 +57,42 @@ public class MindBlowApplication {
                     "Цицерон", "Шулер", "Юрій", "Ясен", "Артур", "Брячислав", "Всеволод", "Густав", "Драгомир", "Єфрем"
             };
             var admin = RegisterRequest.builder()
-                    .firstname("Admin")
-                    .lastname("Admin")
+                    .firstName("Admin")
+                    .lastName("Admin")
                     .email("admin@mail.com")
                     .password("password")
                     .role(ADMIN)
                     .build();
-            System.out.println("Admin token: " + service.register(admin).getAccessToken());
-            userService.enableUser(new EnableUserRequest(1, admin.getFirstname(), admin.getLastname(), ADMIN));
+            if (userRepository.findById(1).isEmpty()) {
+                service.register(admin);
+                userService.enableUser(new EnableUserRequest(1, admin.getFirstName(), admin.getLastName(), ADMIN));
+            }
             /*for (int i = 2; i < 101; i++) {
                 var teacher = RegisterRequest.builder()
-                        .firstname(names[i - 2])
-                        .lastname(surnames[i - 2])
+                        .firstName(names[i - 2])
+                        .lastName(surnames[i - 2])
                         .email(names[i - 1].toLowerCase() + surnames[i - 1].toLowerCase() + "@mail.com")
                         .password("password")
                         .role(TEACHER)
                         .build();
                 System.out.println("Student token: " + service.register(teacher).getAccessToken());
-                userService.enableUser(new EnableUserRequest(i, teacher.getFirstname(), teacher.getLastname(), TEACHER));
+                userService.enableUser(new EnableUserRequest(i, teacher.getFirstName(), teacher.getLastName(), TEACHER));
             }
             for (int i = 101; i < 201; i++) {
                 var teacher = RegisterRequest.builder()
-                        .firstname(names[i - 101])
-                        .lastname(surnames[i - 101])
+                        .firstName(names[i - 101])
+                        .lastName(surnames[i - 101])
                         .email(names[i - 101].toLowerCase() + surnames[i - 101].toLowerCase() + "@mail.com")
                         .password("password")
                         .role(TEACHER)
                         .build();
                 System.out.println("Student token: " + service.register(teacher).getAccessToken());
-                userService.enableUser(new EnableUserRequest(i, teacher.getFirstname(), teacher.getLastname(), TEACHER));
+                userService.enableUser(new EnableUserRequest(i, teacher.getFirstName(), teacher.getLastName(), TEACHER));
             }
             for (int i = 201; i < 301; i++) {
                 var teacher = RegisterRequest.builder()
-                        .firstname(names[i - 201])
-                        .lastname(surnames[i - 201])
+                        .firstName(names[i - 201])
+                        .lastName(surnames[i - 201])
                         .email(names[i - 201].toLowerCase() + surnames[i - 201].toLowerCase() + "@mail.com")
                         .password("password")
                         .role(TEACHER)
@@ -101,14 +103,14 @@ public class MindBlowApplication {
 
             for (int i = 301; i < 401; i++) {
                 var teacher = RegisterRequest.builder()
-                        .firstname(names[i - 301])
-                        .lastname(surnames[i - 301])
+                        .firstName(names[i - 301])
+                        .lastName(surnames[i - 301])
                         .email(names[i - 301].toLowerCase() + surnames[i - 301].toLowerCase() + "@mail.com")
                         .password("password")
                         .role(STUDENT)
                         .build();
                 System.out.println("Student token: " + service.register(teacher).getAccessToken());
-                userService.enableUser(new EnableUserRequest(i, teacher.getFirstname(), teacher.getLastname(), STUDENT));
+                userService.enableUser(new EnableUserRequest(i, teacher.getFirstName(), teacher.getLastName(), STUDENT));
             }
 
             String[] subjects = {

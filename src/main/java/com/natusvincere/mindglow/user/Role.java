@@ -20,7 +20,8 @@ public enum Role {
                     COURSE_CREATE,
                     COURSE_DELETE,
                     COURSE_STUDENT_ADD,
-                    COURSE_STUDENT_REMOVE
+                    COURSE_STUDENT_REMOVE,
+                    USER_GET
             )
     ),
     ADMIN(
