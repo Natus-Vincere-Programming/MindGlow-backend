@@ -16,7 +16,10 @@
 3. Налаштування бази даних
    - Потрібно за [посиланням](https://www.heidisql.com/download.php) встановити HeidiSQL.
    - Зробити дії за фото ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/b358feb2-d253-43ac-bda7-171a5982a511) Ввести пароль який вводили при встановленні MySQL. Нажати кнопку відкрити ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/cb034492-a14f-4f14-96d1-e09b570e6f1c) Нажати лівою кнопкою мишки на Unnamed і створити нову базу даних ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/0839c45a-c106-4ade-a4e4-eede907738a7)
-   - **Обов'язково назвати базу даних `test`** ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/e441ba3f-ca83-413d-b713-09cd427a26cd)
+   - **Обов'язково назвати базу даних `test`** і нажати кнопку `Гаразд` ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/e441ba3f-ca83-413d-b713-09cd427a26cd)
+   - Якщо з'явилася база даних `test` значить все ок! ![image](https://github.com/Natus-Vincere-Programming/MindGlow-backend/assets/113195769/ce4e98b1-000d-4d77-a22c-492b7c743fe5)
+4. Запуск програми
+
 
 
 
