@@ -5,6 +5,7 @@ import com.natusvincere.mindglow.subject.Subject;
 import com.natusvincere.mindglow.subject.SubjectRepository;
 import com.natusvincere.mindglow.token.TokenRepository;
 import com.natusvincere.mindglow.user.exception.TokenNotValidException;
+import com.natusvincere.mindglow.user.exception.UserAccessException;
 import com.natusvincere.mindglow.user.request.EnableUserRequest;
 import com.natusvincere.mindglow.user.request.UserRequest;
 import com.natusvincere.mindglow.user.request.UsersRequest;
@@ -102,6 +103,7 @@ public class UserService {
     public void deleteUser(int id) {
         User user = userRepository.findById(id).orElseThrow();
         Optional<Subject> byStudentsContaining = subjectRepository.findByStudentsContaining(user);
+        subjectRepository.deleteAll(subjectRepository.findAllByTeacher(user));
         byStudentsContaining.ifPresent(subject -> {
             subject.getStudents().remove(user);
             subjectRepository.save(subject);
@@ -180,9 +182,10 @@ public class UserService {
                         .email(user.getEmail())
                         .role(user.getRole().name())
                         .id(String.valueOf(user.getId()))
+                        .firstLogin(user.isFirstLogin())
                         .enabled(user.isEnabled())
                         .build())
-                .orElseThrow();
+                .orElseThrow(() -> new UserAccessException("User not found"));
     }
 
     public UsersResponse getUsers(boolean enabled) {
@@ -281,5 +284,15 @@ public class UserService {
                 .users(mapUsersToResponse(allByRole.getContent().stream()))
                 .hasNext(allByRole.hasNext())
                 .build();
+    }
+
+    public void changeCredentials(ChangeCredentialsRequest request, Principal connectedUser) {
+        User user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+        user.setFirstname(request.getFirstName());
+        user.setLastname(request.getLastName());
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setFirstLogin(false);
+        userRepository.save(user);
     }
 }
